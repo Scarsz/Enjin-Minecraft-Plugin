@@ -18,11 +18,13 @@ public class LogFilter extends AbstractFilter {
 
     @Override
     public Result filter(LogEvent event) {
+        if (!event.getLoggerName().startsWith("com.enjin")) return Result.NEUTRAL;
+
         String message = event.getMessage().getFormattedMessage().trim().toLowerCase();
         if (!debug && message.startsWith("[debug]")) {
             return Result.DENY;
         } else {
-            return Result.ACCEPT;
+            return Result.NEUTRAL;
         }
     }
 
